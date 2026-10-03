@@ -6,7 +6,7 @@
 
 window.SITE_CONFIG = {
   teamName: "SoH Worship Team",
-  churchName: "",                 // e.g. "Grace Community Church" (shows in the footer)
+  churchName: "Star of Hope Full Gospel Church",                 // e.g. "Grace Community Church" (shows in the footer)
   timeZone: "America/Chicago",
 
   /* ---------- HOME ---------- */
@@ -20,7 +20,7 @@ window.SITE_CONFIG = {
   /* ---------- CALENDAR ---------- */
   // Google Calendar → Settings → (your calendar) → Integrate calendar → Calendar ID
   // Looks like: abc123xyz@group.calendar.google.com
-  googleCalendarId: "",
+  googleCalendarId: ""https://calendar.google.com/calendar/embed?height=600&wkst=1&ctz=America%2FChicago&showCalendars=0&showTz=0&title=SoH%20Worship%20Team&src=MDc0NmZiZmQ1NzFmZDFkZGFkYjFiZTIyNmUwMjFkMTUxMWFiYjliNGMxOWY2ZTc5MmIyYzhiYjU2MDc5NGJkMUBncm91cC5jYWxlbmRhci5nb29nbGUuY29t&color=%237986cb" style="border-width:0" width="800" height="600" frameborder="0" scrolling="no"></iframe>",
 
   /* ---------- MUSIC ---------- */
   // In Spotify: ... on the playlist → Share → Copy link to playlist
