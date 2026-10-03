@@ -78,7 +78,7 @@ window.SITE_CONFIG = {
 
   // Team updates shown on the Prayer page. Newest first. Add or delete lines.
   updates: [
-    { date: "Nov 7", text: "Min. Dee has to work in the morning. Might be late or absent from rehearsal." }
+    { date: "Nov 7", text: "Min. Dee has to work in the morning. Might be late or absent from rehearsal." },
     { date: "Nov 14-15", text: "Min. Dee has to work both days and will not be in attendance for rehearsal or service."}
   ]
 };
