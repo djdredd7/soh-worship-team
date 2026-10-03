@@ -72,13 +72,13 @@ window.SITE_CONFIG = {
 
   /* ---------- PRAYER ---------- */
   // Google Form → Send → link icon → copy the link
-  prayerFormUrl: "https://forms.gle/WfKFskiNYDMK33rG6",
+  prayerFormUrl: "https://docs.google.com/forms/d/e/1FAIpQLSdTz_K7PmH9IwbcNJ5BW90xs26GFrj_SZ44SClmvV-bkZrF9w/viewform?usp=sharing&ouid=110526409547886659824",
   // The Google Sheet with the form responses (share it only with your team)
   prayerListUrl: "",
 
   // Team updates shown on the Prayer page. Newest first. Add or delete lines.
   updates: [
-    { date: "Nov 7", text: "Min. Dee has to work in the morning. Might be late or absent from rehearsal." 
-      date: "Nov 14-15", text: "Min. Dee has to work both days and will not be in attendance for rehearsal or service."}
+    { date: "Nov 7", text: "Min. Dee has to work in the morning. Might be late or absent from rehearsal." }
+    { date: "Nov 14-15", text: "Min. Dee has to work both days and will not be in attendance for rehearsal or service."}
   ]
 };
