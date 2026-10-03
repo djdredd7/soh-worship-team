@@ -25,10 +25,10 @@ window.SITE_CONFIG = {
   /* ---------- MUSIC ---------- */
   // In Spotify: ... on the playlist → Share → Copy link to playlist
   playlists: {
-    upcoming:    "",
-    rotation:    "",
-    toLearn:     "",
-    suggestions: ""   // make this one Collaborative so the team can add songs
+    upcoming:    "https://open.spotify.com/playlist/3vZgHuYGXv5XNKq4UWv1Hq?si=4a90d9737dca46f6&pt=4e1ba7a4dc342a0b178f0eb952bf4ecb",
+    rotation:    "https://open.spotify.com/playlist/3FVaZ03hpROecWMZgwtIur?si=0ed3d453f6f64e24&pt=9be2e322a8e8ac384b22d4144481ab98",
+    toLearn:     "https://open.spotify.com/playlist/1o5mnX4EyNxuSnTzF7xj4g?si=3f6ac44562fb44a3&pt=049f1fd49dd1c586389c8c8a6647e54c",
+    suggestions: "https://open.spotify.com/playlist/0i35cEV7T8EABAdUo6YRZh?si=n2RJLErwSO2q_1vRlkCzGQ"   // make this one Collaborative so the team can add songs
   },
 
   // For songs that aren't on Spotify. In YouTube: open the playlist → Share → Copy.
