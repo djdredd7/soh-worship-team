@@ -44,28 +44,32 @@
     dateEl.textContent = d.toLocaleDateString("en-US", { weekday: "long", month: "long", day: "numeric" });
   }
 
+  const isFbVideo = (u) => isSet(u) && /(\/videos\/|\/watch|video\.php|fb\.watch|\/reel\/|\/live\/\d)/.test(u);
+  const fbVideo = isFbVideo(C.facebookVideoUrl) ? C.facebookVideoUrl : "";
+  const fbPage = isSet(C.facebookLiveUrl) ? C.facebookLiveUrl : (isSet(C.facebookVideoUrl) && !fbVideo ? C.facebookVideoUrl : "");
+
   const liveLink = $("#fb-live-link");
   if (liveLink) {
-    if (isSet(C.facebookVideoUrl)) liveLink.href = C.facebookVideoUrl;
-    else if (isSet(C.facebookLiveUrl)) liveLink.href = C.facebookLiveUrl;
+    if (fbVideo) liveLink.href = fbVideo;
+    else if (fbPage) liveLink.href = fbPage;
     else liveLink.hidden = true;
   }
 
   const stream = $("#stream");
   if (stream) {
-    if (isSet(C.facebookVideoUrl)) {
+    if (fbVideo) {
       stream.classList.add("ratio-16x9");
       stream.append(
         frame(
-          "https://www.facebook.com/plugins/video.php?href=" + encodeURIComponent(C.facebookVideoUrl) + "&show_text=false&width=1280",
+          "https://www.facebook.com/plugins/video.php?href=" + encodeURIComponent(fbVideo) + "&show_text=false&width=1280",
           "Last Sunday's livestream",
           { allow: "autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share", allowfullscreen: "" }
         )
       );
-    } else if (isSet(C.facebookLiveUrl)) {
+    } else if (fbPage) {
       stream.classList.add("stream-placeholder");
       const p = document.createElement("p");
-      p.textContent = "The newest service is always first on our Facebook Live page.";
+      p.textContent = "Watch the latest service on our Facebook page.";
       stream.append(p);
     } else {
       setupNote(stream, "No livestream link yet.", "facebookLiveUrl");
@@ -98,62 +102,69 @@
   }
 
   /* ---------- Music ---------- */
-  const spotifyId = (url) => ((url || "").match(/playlist[/:]([A-Za-z0-9]+)/) || [])[1];
-  const youtubeId = (url) => ((url || "").match(/[?&]list=([A-Za-z0-9_-]+)/) || [])[1];
+  const SOURCES = [
+    {
+      config: "playlists", name: "Spotify", cls: "slot-spotify",
+      parse: (u) => ((u || "").match(/open\.spotify\.com\/playlist\/([A-Za-z0-9]+)/) || [])[1],
+      embed: (id) => "https://open.spotify.com/embed/playlist/" + id + "?utm_source=generator",
+      open: (id) => "https://open.spotify.com/playlist/" + id,
+      allow: "autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+    },
+    {
+      config: "appleMusicPlaylists", name: "Apple Music", cls: "slot-apple",
+      parse: (u) => ((u || "").match(/music\.apple\.com\/([a-z]{2}\/playlist\/[^?#\s"]+)/) || [])[1],
+      embed: (path) => "https://embed.music.apple.com/" + path,
+      open: (path) => "https://music.apple.com/" + path,
+      allow: "autoplay *; encrypted-media *; fullscreen *; clipboard-write"
+    },
+    {
+      config: "youtubePlaylists", name: "YouTube", cls: "slot-youtube",
+      parse: (u) => ((u || "").match(/[?&]list=([A-Za-z0-9_-]+)/) || [])[1],
+      embed: (id) => "https://www.youtube-nocookie.com/embed/videoseries?list=" + id,
+      open: (id) => "https://www.youtube.com/playlist?list=" + id,
+      allow: "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+    },
+    {
+      config: "youtubeMusicPlaylists", name: "YouTube Music", cls: "slot-youtube",
+      parse: (u) => ((u || "").match(/[?&]list=([A-Za-z0-9_-]+)/) || [])[1],
+      embed: (id) => "https://www.youtube-nocookie.com/embed/videoseries?list=" + id,
+      open: (id) => "https://music.youtube.com/playlist?list=" + id,
+      allow: "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+    }
+  ];
 
   document.querySelectorAll("[data-section]").forEach((box) => {
     const key = box.dataset.section;
-    const sp = spotifyId((C.playlists || {})[key]);
-    const yt = youtubeId((C.youtubePlaylists || {})[key]);
-    const both = sp && yt;
+    const found = SOURCES
+      .map((src) => ({ src, id: src.parse((C[src.config] || {})[key]) }))
+      .filter((x) => x.id);
 
-    if (!sp && !yt) {
-      setupNote(box, "No playlist linked yet.", "playlists." + key + " or youtubePlaylists." + key);
+    if (!found.length) {
+      setupNote(box, "No playlist linked yet.", "playlists." + key + " (or another music service)");
       return;
     }
 
-    const addSource = (label, className, src, title, allow, href, linkText) => {
+    found.forEach(({ src, id }) => {
       const wrap = document.createElement("div");
       wrap.className = "source";
-      if (both) {
+      if (found.length > 1) {
         const h = document.createElement("h3");
         h.className = "source-label";
-        h.textContent = label;
+        h.textContent = "On " + src.name;
         wrap.append(h);
       }
       const slot = document.createElement("div");
-      slot.className = "slot " + className;
-      slot.append(frame(src, title, { allow, allowfullscreen: "" }));
+      slot.className = "slot " + src.cls;
+      slot.append(frame(src.embed(id), src.name + " playlist", { allow: src.allow, allowfullscreen: "" }));
       const a = document.createElement("a");
       a.className = "text-link";
-      a.href = href;
+      a.href = src.open(id);
       a.target = "_blank";
       a.rel = "noopener";
-      a.textContent = linkText;
+      a.textContent = (key === "suggestions" ? "Add a song in " : "Open in ") + src.name;
       wrap.append(slot, a);
       box.append(wrap);
-    };
-
-    if (sp) {
-      addSource(
-        "On Spotify", "slot-spotify",
-        "https://open.spotify.com/embed/playlist/" + sp + "?utm_source=generator",
-        "Spotify playlist",
-        "autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture",
-        "https://open.spotify.com/playlist/" + sp,
-        key === "suggestions" ? "Add a song in Spotify" : "Open in Spotify"
-      );
-    }
-    if (yt) {
-      addSource(
-        both ? "Only on YouTube" : "On YouTube", "slot-youtube",
-        "https://www.youtube-nocookie.com/embed/videoseries?list=" + yt,
-        "YouTube playlist",
-        "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share",
-        "https://www.youtube.com/playlist?list=" + yt,
-        key === "suggestions" ? "Add a video on YouTube" : "Open in YouTube"
-      );
-    }
+    });
   });
 
   /* ---------- Lead sheets ---------- */

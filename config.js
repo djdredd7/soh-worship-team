@@ -11,16 +11,16 @@ window.SITE_CONFIG = {
 
   /* ---------- HOME ---------- */
   // Your church page's Live tab. Always shows the newest stream.
-  facebookLiveUrl: "https://www.facebook.com/YOURCHURCHPAGE/live",
+  facebookLiveUrl: "https://www.facebook.com/profile.php?id=100068459588571",
 
   // OPTIONAL: paste last Sunday's video link here each week to play it
   // right on the homepage. Leave "" to show just the "Watch" button.
-  facebookVideoUrl: "https://www.facebook.com/profile.php?id=100068459588571",
+  facebookVideoUrl: "",
 
   /* ---------- CALENDAR ---------- */
   // Google Calendar → Settings → (your calendar) → Integrate calendar → Calendar ID
   // Looks like: abc123xyz@group.calendar.google.com
-    googleCalendarId: "0746fbfd571fd1ddadb1be226e021d1511abb9b4c19f6e792b2c8bb560794bd1@group.calendar.google.com",
+  googleCalendarId: "0746fbfd571fd1ddadb1be226e021d1511abb9b4c19f6e792b2c8bb560794bd1@group.calendar.google.com",
 
   /* ---------- MUSIC ---------- */
   // In Spotify: ... on the playlist → Share → Copy link to playlist
@@ -33,8 +33,26 @@ window.SITE_CONFIG = {
 
   // For songs that aren't on Spotify. In YouTube: open the playlist → Share → Copy.
   // Set each playlist to Public or Unlisted (Private playlists won't play here).
-  // Fill in either one, both, or neither for each section.
+  // Fill in any mix of services for each section, or leave them all blank.
   youtubePlaylists: {
+    upcoming:    "",
+    rotation:    "",
+    toLearn:     "",
+    suggestions: ""
+  },
+
+  // Apple Music: open the playlist → ... → Share → Copy Link.
+  // Subscribers signed in hear full songs; everyone else gets 30-second previews.
+  appleMusicPlaylists: {
+    upcoming:    "",
+    rotation:    "",
+    toLearn:     "",
+    suggestions: ""
+  },
+
+  // YouTube Music: open the playlist → ... → Share → Copy link.
+  // Set it to Public or Unlisted. Plays on the site through YouTube's player.
+  youtubeMusicPlaylists: {
     upcoming:    "",
     rotation:    "",
     toLearn:     "",
