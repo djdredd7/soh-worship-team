@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="robots" content="noindex, nofollow">
+  <title>Lead sheets · Worship Team</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎶</text></svg>">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Gloock&family=Public+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="site-header">
+    <a class="brand" href="index.html" data-team-name>Worship Team</a>
+    <nav aria-label="Main">
+      <a href="index.html">Home</a>
+      <a href="calendar.html">Calendar</a>
+      <a href="music.html">Music</a>
+      <a href="leadsheets.html" aria-current="page">Lead sheets</a>
+      <a href="prayer.html">Prayer</a>
+    </nav>
+  </header>
+  <main>
+    <h1 class="page-title">Lead sheets</h1>
+    <p class="page-intro">Charts for our songs, with the key we play each one in.</p>
+    <div class="sheets-tools">
+      <label class="search">
+        <span class="visually-hidden">Search songs</span>
+        <input type="search" id="sheet-search" placeholder="Search by song or artist" autocomplete="off">
+      </label>
+      <a class="button" id="sheets-folder-link" href="#" target="_blank" rel="noopener">Open the full folder</a>
+    </div>
+    <ul class="sheets" id="sheets"></ul>
+    <p class="muted" id="sheets-empty" hidden>No songs match that search.</p>
+  </main>
+
+  <footer>
+    <span data-team-name>Worship Team</span> <span id="footer-church"></span> &copy; <span id="year"></span>
+  </footer>
+  <script src="config.js"></script>
+  <script src="site.js"></script>
+</body>
+</html>

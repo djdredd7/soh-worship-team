@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="robots" content="noindex, nofollow">
+  <title>Prayer · Worship Team</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎶</text></svg>">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Gloock&family=Public+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="site-header">
+    <a class="brand" href="index.html" data-team-name>Worship Team</a>
+    <nav aria-label="Main">
+      <a href="index.html">Home</a>
+      <a href="calendar.html">Calendar</a>
+      <a href="music.html">Music</a>
+      <a href="leadsheets.html">Lead sheets</a>
+      <a href="prayer.html" aria-current="page">Prayer</a>
+    </nav>
+  </header>
+  <main>
+    <h1 class="page-title">Prayer</h1>
+    <p class="page-intro">We carry each other. Share what's on your heart, and check in on what's happening with the team.</p>
+    <div class="prayer-grid">
+      <section>
+        <h2>Send a request</h2>
+        <div id="prayer-form" class="embed"></div>
+      </section>
+      <section>
+        <h2>Team updates</h2>
+        <ul class="updates" id="updates"></ul>
+        <div class="prayer-list">
+          <a class="button" id="prayer-list-link" href="#" target="_blank" rel="noopener">Read prayer requests</a>
+          <p>Opens in Google Sheets. Only team members it's shared with can see it.</p>
+        </div>
+      </section>
+    </div>
+  </main>
+  <footer>
+    <span data-team-name>Worship Team</span> <span id="footer-church"></span> &copy; <span id="year"></span>
+  </footer>
+  <script src="config.js"></script>
+  <script src="site.js"></script>
+</body>
+</html>

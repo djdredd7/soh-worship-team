@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="robots" content="noindex, nofollow">
+  <title>Worship Team</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎶</text></svg>">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Gloock&family=Public+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="site-header">
+    <a class="brand" href="index.html" data-team-name>Worship Team</a>
+    <nav aria-label="Main">
+      <a href="index.html" aria-current="page">Home</a>
+      <a href="calendar.html">Calendar</a>
+      <a href="music.html">Music</a>
+      <a href="leadsheets.html">Lead sheets</a>
+      <a href="prayer.html">Prayer</a>
+    </nav>
+  </header>
+  <main>
+    <section>
+      <p class="hero-label">Last Sunday's service</p>
+      <h1 class="hero-date" id="last-sunday-date">Sunday</h1>
+      <div id="stream" class="stream embed"></div>
+      <a class="button" id="fb-live-link" href="#" target="_blank" rel="noopener">Watch on Facebook</a>
+    </section>
+
+    <section class="around">
+      <h2>Around the site</h2>
+      <ul class="around-list">
+        <li><a href="calendar.html"><strong>Calendar</strong><span>Services, events, and what we're singing each week</span></a></li>
+        <li><a href="music.html"><strong>Music</strong><span>Upcoming songs, the rotation, songs to learn, and suggestions</span></a></li>
+        <li><a href="leadsheets.html"><strong>Lead sheets</strong><span>Charts for every song, with the key we play it in</span></a></li>
+        <li><a href="prayer.html"><strong>Prayer</strong><span>Send a request and catch up on team updates</span></a></li>
+      </ul>
+    </section>
+  </main>
+  <footer>
+    <span data-team-name>Worship Team</span> <span id="footer-church"></span> &copy; <span id="year"></span>
+  </footer>
+  <script src="config.js"></script>
+  <script src="site.js"></script>
+</body>
+</html>
