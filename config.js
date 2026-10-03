@@ -31,16 +31,6 @@ window.SITE_CONFIG = {
     suggestions: "https://open.spotify.com/playlist/0i35cEV7T8EABAdUo6YRZh?si=n2RJLErwSO2q_1vRlkCzGQ"   // make this one Collaborative so the team can add songs
   },
 
-  // For songs that aren't on Spotify. In YouTube: open the playlist → Share → Copy.
-  // Set each playlist to Public or Unlisted (Private playlists won't play here).
-  // Fill in any mix of services for each section, or leave them all blank.
-  youtubePlaylists: {
-    upcoming:    "https://youtube.com/playlist?list=PLfxctBwfS8GI&si=UmoaliFjTFw_hVhx",
-    rotation:    "https://youtube.com/playlist?list=PLAxIwGxxPVsA&si=Aj3dPLiAdvyNlJ45",
-    toLearn:     "https://youtube.com/playlist?list=PLRXm8yHO2fjk&si=Mvyv2BaJZOacKZw3",
-    suggestions: "https://youtube.com/playlist?list=PLUuMneJz_hVA&si=DSfLpCfsrYDuAWoQ"
-  },
-
   // Apple Music: open the playlist → ... → Share → Copy Link.
   // Subscribers signed in hear full songs; everyone else gets 30-second previews.
   appleMusicPlaylists: {
