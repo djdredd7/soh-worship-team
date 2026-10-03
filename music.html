@@ -25,28 +25,48 @@
   <main>
     <h1 class="page-title">Music</h1>
     <p class="page-intro">Listen ahead, keep the rotation fresh, and add songs you'd love us to try.</p>
-    <div class="playlists">
-      <article class="playlist">
-        <h2>Upcoming</h2>
-        <p>Songs for the next few services.</p>
-        <div class="sources" data-section="upcoming"></div>
-      </article>
-      <article class="playlist">
-        <h2>In rotation</h2>
+    <nav class="jump" aria-label="Playlists on this page">
+      <a href="#upcoming">Upcoming</a>
+      <a href="#rotation">In rotation</a>
+      <a href="#toLearn">To learn</a>
+      <a href="#suggestions">Suggestions</a>
+    </nav>
+
+    <section class="playlist" id="upcoming" aria-labelledby="upcoming-title">
+      <div class="playlist-info">
+        <h2 id="upcoming-title">Upcoming</h2>
+        <p>Songs for the next few services. Listen ahead so you walk into rehearsal ready.</p>
+        <div class="playlist-links" data-links="upcoming"></div>
+      </div>
+      <div class="playlist-player" data-section="upcoming"></div>
+    </section>
+
+    <section class="playlist" id="rotation" aria-labelledby="rotation-title">
+      <div class="playlist-info">
+        <h2 id="rotation-title">In rotation</h2>
         <p>Songs we know and sing regularly.</p>
-        <div class="sources" data-section="rotation"></div>
-      </article>
-      <article class="playlist">
-        <h2>To learn</h2>
-        <p>New songs we're working on. Start listening now.</p>
-        <div class="sources" data-section="toLearn"></div>
-      </article>
-      <article class="playlist playlist-suggestions">
-        <h2>Suggestions</h2>
-        <p>Anyone on the team can add songs to these playlists.</p>
-        <div class="sources" data-section="suggestions"></div>
-      </article>
-    </div>
+        <div class="playlist-links" data-links="rotation"></div>
+      </div>
+      <div class="playlist-player" data-section="rotation"></div>
+    </section>
+
+    <section class="playlist" id="toLearn" aria-labelledby="toLearn-title">
+      <div class="playlist-info">
+        <h2 id="toLearn-title">To learn</h2>
+        <p>New songs we're working on. Start getting them in your ear now.</p>
+        <div class="playlist-links" data-links="toLearn"></div>
+      </div>
+      <div class="playlist-player" data-section="toLearn"></div>
+    </section>
+
+    <section class="playlist playlist-suggestions" id="suggestions" aria-labelledby="suggestions-title">
+      <div class="playlist-info">
+        <h2 id="suggestions-title">Suggestions</h2>
+        <p>Heard something you think would bless the church? Add it here.</p>
+        <div class="playlist-links" data-links="suggestions"></div>
+      </div>
+      <div class="playlist-player" data-section="suggestions"></div>
+    </section>
   </main>
   <footer>
     <span data-team-name>Worship Team</span> <span id="footer-church"></span> &copy; <span id="year"></span>

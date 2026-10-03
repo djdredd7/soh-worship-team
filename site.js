@@ -29,7 +29,7 @@
   /* ---------- Shared ---------- */
   document.querySelectorAll("[data-team-name]").forEach((n) => (n.textContent = C.teamName || "Worship Team"));
   const footerChurch = $("#footer-church");
-  if (footerChurch) footerChurch.textContent = C.churchName || "";
+  if (footerChurch) footerChurch.textContent = C.churchName ? "· " + C.churchName : "";
   const year = $("#year");
   if (year) year.textContent = new Date().getFullYear();
 
@@ -133,8 +133,15 @@
     }
   ];
 
+  // Remember which service each person prefers, and use it in every section
+  const PREF_KEY = "music-service";
+  let preferred = null;
+  try { preferred = localStorage.getItem(PREF_KEY); } catch (e) {}
+  const players = [];
+
   document.querySelectorAll("[data-section]").forEach((box) => {
     const key = box.dataset.section;
+    const links = document.querySelector('[data-links="' + key + '"]');
     const found = SOURCES
       .map((src) => ({ src, id: src.parse((C[src.config] || {})[key]) }))
       .filter((x) => x.id);
@@ -144,27 +151,64 @@
       return;
     }
 
-    found.forEach(({ src, id }) => {
-      const wrap = document.createElement("div");
-      wrap.className = "source";
-      if (found.length > 1) {
-        const h = document.createElement("h3");
-        h.className = "source-label";
-        h.textContent = "On " + src.name;
-        wrap.append(h);
+    // One "Open in ..." link that follows whichever service is showing.
+    // Uses the exact link you pasted, so things like Apple Music join links keep working.
+    const openLink = document.createElement("a");
+    openLink.className = "text-link";
+    openLink.target = "_blank";
+    openLink.rel = "noopener";
+    links.append(openLink);
+    const setLink = (pick) => {
+      const raw = ((C[pick.src.config] || {})[key] || "").trim();
+      openLink.href = /^https:\/\//.test(raw) ? raw : pick.src.open(pick.id);
+      openLink.textContent = (key === "suggestions" ? "Add a song in " : "Open in ") + pick.src.name;
+    };
+
+    // Service tabs (only when there's more than one)
+    let tabs = null;
+    if (found.length > 1) {
+      tabs = document.createElement("div");
+      tabs.className = "service-tabs";
+      tabs.setAttribute("role", "tablist");
+      tabs.setAttribute("aria-label", "Choose a music service");
+      box.append(tabs);
+    }
+    const stage = document.createElement("div");
+    stage.className = "player-stage";
+    box.append(stage);
+
+    const slots = {};
+    const show = (name) => {
+      const pick = found.find((f) => f.src.name === name) || found[0];
+      if (!slots[pick.src.name]) {
+        const slot = document.createElement("div");
+        slot.className = "slot " + pick.src.cls;
+        slot.append(frame(pick.src.embed(pick.id), pick.src.name + " playlist", { allow: pick.src.allow, allowfullscreen: "" }));
+        stage.append(slot);
+        slots[pick.src.name] = slot;
       }
-      const slot = document.createElement("div");
-      slot.className = "slot " + src.cls;
-      slot.append(frame(src.embed(id), src.name + " playlist", { allow: src.allow, allowfullscreen: "" }));
-      const a = document.createElement("a");
-      a.className = "text-link";
-      a.href = src.open(id);
-      a.target = "_blank";
-      a.rel = "noopener";
-      a.textContent = (key === "suggestions" ? "Add a song in " : "Open in ") + src.name;
-      wrap.append(slot, a);
-      box.append(wrap);
-    });
+      Object.entries(slots).forEach(([n, el]) => (el.hidden = n !== pick.src.name));
+      setLink(pick);
+      if (tabs) tabs.querySelectorAll("button").forEach((btn) => btn.setAttribute("aria-selected", String(btn.dataset.service === pick.src.name)));
+    };
+
+    if (tabs) {
+      found.forEach(({ src }) => {
+        const btn = document.createElement("button");
+        btn.type = "button";
+        btn.setAttribute("role", "tab");
+        btn.dataset.service = src.name;
+        btn.textContent = src.name;
+        btn.addEventListener("click", () => {
+          try { localStorage.setItem(PREF_KEY, src.name); } catch (e) {}
+          players.forEach((p) => p(src.name)); // switch every section that has this service
+        });
+        tabs.append(btn);
+      });
+    }
+
+    players.push((name) => { if (found.some((f) => f.src.name === name)) show(name); });
+    show(preferred);
   });
 
   /* ---------- Lead sheets ---------- */
