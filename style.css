@@ -207,18 +207,19 @@ html { scroll-behavior: smooth; scroll-padding-top: calc(5rem + env(safe-area-in
 .playlist-links { display: flex; flex-direction: column; align-items: flex-start; gap: 0.4rem; }
 .playlist-suggestions .playlist-info h2 { color: var(--gold); }
 
-.service-tabs { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-bottom: 0.9rem; }
-.service-tabs button {
-  font: inherit; font-weight: 600; font-size: 0.9rem;
-  color: var(--muted);
+.also-on { color: var(--muted); font-size: 0.9rem; margin: 1.1rem 0 0.4rem !important; }
+.service-links { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+.service-link {
+  font-weight: 600;
+  font-size: 0.95rem;
+  color: var(--ink);
+  text-decoration: none;
   background: var(--surface);
   border: 1px solid var(--line);
   border-radius: 999px;
-  padding: 0.4rem 0.95rem;
-  cursor: pointer;
+  padding: 0.45rem 1rem;
 }
-.service-tabs button:hover { color: var(--ink); }
-.service-tabs button[aria-selected="true"] { background: var(--glass); border-color: var(--glass); color: var(--surface); }
+.service-link:hover { border-color: var(--glass); color: var(--glass); }
 
 .slot { border-radius: 12px; overflow: hidden; background: var(--surface); }
 .slot iframe { width: 100%; height: 100%; border: 0; display: block; }

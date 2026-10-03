@@ -133,11 +133,9 @@
     }
   ];
 
-  // Remember which service each person prefers, and use it in every section
-  const PREF_KEY = "music-service";
-  let preferred = null;
-  try { preferred = localStorage.getItem(PREF_KEY); } catch (e) {}
-  const players = [];
+  // The first service in this list that has a link becomes the player.
+  // Every other service with a link shows as a button.
+  const PLAYER_ORDER = ["YouTube Music", "YouTube", "Spotify", "Apple Music"];
 
   document.querySelectorAll("[data-section]").forEach((box) => {
     const key = box.dataset.section;
@@ -147,68 +145,49 @@
       .filter((x) => x.id);
 
     if (!found.length) {
-      setupNote(box, "No playlist linked yet.", "playlists." + key + " (or another music service)");
+      setupNote(box, "No playlist linked yet.", "youtubeMusicPlaylists." + key + " (or another music service)");
       return;
     }
 
-    // One "Open in ..." link that follows whichever service is showing.
-    // Uses the exact link you pasted, so things like Apple Music join links keep working.
-    const openLink = document.createElement("a");
-    openLink.className = "text-link";
-    openLink.target = "_blank";
-    openLink.rel = "noopener";
-    links.append(openLink);
-    const setLink = (pick) => {
-      const raw = ((C[pick.src.config] || {})[key] || "").trim();
-      openLink.href = /^https:\/\//.test(raw) ? raw : pick.src.open(pick.id);
-      openLink.textContent = (key === "suggestions" ? "Add a song in " : "Open in ") + pick.src.name;
+    const player = PLAYER_ORDER.map((n) => found.find((f) => f.src.name === n)).find(Boolean);
+    const slot = document.createElement("div");
+    slot.className = "slot " + player.src.cls;
+    slot.append(frame(player.src.embed(player.id), player.src.name + " playlist", { allow: player.src.allow, allowfullscreen: "" }));
+    box.append(slot);
+
+    // Uses the exact link you pasted, so things like Apple Music join links keep working
+    const hrefFor = (f) => {
+      const raw = ((C[f.src.config] || {})[key] || "").trim();
+      return /^https:\/\//.test(raw) ? raw : f.src.open(f.id);
     };
+    const verb = key === "suggestions" ? "Add a song in " : "Open in ";
 
-    // Service tabs (only when there's more than one)
-    let tabs = null;
-    if (found.length > 1) {
-      tabs = document.createElement("div");
-      tabs.className = "service-tabs";
-      tabs.setAttribute("role", "tablist");
-      tabs.setAttribute("aria-label", "Choose a music service");
-      box.append(tabs);
-    }
-    const stage = document.createElement("div");
-    stage.className = "player-stage";
-    box.append(stage);
+    const main = document.createElement("a");
+    main.className = "text-link";
+    main.href = hrefFor(player);
+    main.target = "_blank";
+    main.rel = "noopener";
+    main.textContent = verb + player.src.name;
+    links.append(main);
 
-    const slots = {};
-    const show = (name) => {
-      const pick = found.find((f) => f.src.name === name) || found[0];
-      if (!slots[pick.src.name]) {
-        const slot = document.createElement("div");
-        slot.className = "slot " + pick.src.cls;
-        slot.append(frame(pick.src.embed(pick.id), pick.src.name + " playlist", { allow: pick.src.allow, allowfullscreen: "" }));
-        stage.append(slot);
-        slots[pick.src.name] = slot;
-      }
-      Object.entries(slots).forEach(([n, el]) => (el.hidden = n !== pick.src.name));
-      setLink(pick);
-      if (tabs) tabs.querySelectorAll("button").forEach((btn) => btn.setAttribute("aria-selected", String(btn.dataset.service === pick.src.name)));
-    };
-
-    if (tabs) {
-      found.forEach(({ src }) => {
-        const btn = document.createElement("button");
-        btn.type = "button";
-        btn.setAttribute("role", "tab");
-        btn.dataset.service = src.name;
-        btn.textContent = src.name;
-        btn.addEventListener("click", () => {
-          try { localStorage.setItem(PREF_KEY, src.name); } catch (e) {}
-          players.forEach((p) => p(src.name)); // switch every section that has this service
-        });
-        tabs.append(btn);
+    const others = found.filter((f) => f !== player);
+    if (others.length) {
+      const label = document.createElement("p");
+      label.className = "also-on";
+      label.textContent = key === "suggestions" ? "Or add it in" : "Also on";
+      const row = document.createElement("div");
+      row.className = "service-links";
+      others.forEach((f) => {
+        const a = document.createElement("a");
+        a.className = "service-link";
+        a.href = hrefFor(f);
+        a.target = "_blank";
+        a.rel = "noopener";
+        a.textContent = f.src.name;
+        row.append(a);
       });
+      links.append(label, row);
     }
-
-    players.push((name) => { if (found.some((f) => f.src.name === name)) show(name); });
-    show(preferred);
   });
 
   /* ---------- Lead sheets ---------- */
