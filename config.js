@@ -5,7 +5,7 @@
    ========================================================= */
 
 window.SITE_CONFIG = {
-  teamName: "Worship Team",
+  teamName: "SoH Worship Team",
   churchName: "",                 // e.g. "Grace Community Church" (shows in the footer)
   timeZone: "America/Chicago",
 
