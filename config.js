@@ -15,7 +15,7 @@ window.SITE_CONFIG = {
 
   // OPTIONAL: paste last Sunday's video link here each week to play it
   // right on the homepage. Leave "" to show just the "Watch" button.
-  facebookVideoUrl: "",
+  facebookVideoUrl: "https://www.facebook.com/share/v/1EP2tiVMaJ/",
 
   /* ---------- CALENDAR ---------- */
   // Google Calendar → Settings → (your calendar) → Integrate calendar → Calendar ID
@@ -35,33 +35,33 @@ window.SITE_CONFIG = {
   // Set each playlist to Public or Unlisted (Private playlists won't play here).
   // Fill in any mix of services for each section, or leave them all blank.
   youtubePlaylists: {
-    upcoming:    "",
-    rotation:    "",
-    toLearn:     "",
-    suggestions: ""
+    upcoming:    "https://youtube.com/playlist?list=PLfxctBwfS8GI&si=UmoaliFjTFw_hVhx",
+    rotation:    "https://youtube.com/playlist?list=PLAxIwGxxPVsA&si=Aj3dPLiAdvyNlJ45",
+    toLearn:     "https://youtube.com/playlist?list=PLRXm8yHO2fjk&si=Mvyv2BaJZOacKZw3",
+    suggestions: "https://youtube.com/playlist?list=PLUuMneJz_hVA&si=DSfLpCfsrYDuAWoQ"
   },
 
   // Apple Music: open the playlist → ... → Share → Copy Link.
   // Subscribers signed in hear full songs; everyone else gets 30-second previews.
   appleMusicPlaylists: {
-    upcoming:    "",
-    rotation:    "",
-    toLearn:     "",
-    suggestions: ""
+    upcoming:    "https://music.apple.com/us/playlist/upcoming-songs/pl.u-XkD03jJf409orr",
+    rotation:    "https://music.apple.com/us/playlist/songs-in-rotation/pl.u-yZyVDJ3Iz4GDll",
+    toLearn:     "https://music.apple.com/us/playlist/songs-to-learn/pl.u-06ox7raCXx02MM",
+    suggestions: "https://music.apple.com/us/playlist/pl.u-zPyLAB5CMo7EWW?a=join&it=ZN48bxacgY3ozzHX7Drg"
   },
 
   // YouTube Music: open the playlist → ... → Share → Copy link.
   // Set it to Public or Unlisted. Plays on the site through YouTube's player.
   youtubeMusicPlaylists: {
-    upcoming:    "",
-    rotation:    "",
-    toLearn:     "",
-    suggestions: ""
+    upcoming:    "https://music.youtube.com/playlist?list=PLfxctBwfS8GI&si=pXSZb3iFMeFvoDnw",
+    rotation:    "https://music.youtube.com/playlist?list=PLAxIwGxxPVsA&si=DheE2C-Ei98yxqau",
+    toLearn:     "https://music.youtube.com/playlist?list=PLRXm8yHO2fjk&si=StamrJQfXHAYUy_Y",
+    suggestions: "https://music.youtube.com/playlist?list=PLUuMneJz_hVA&si=WSoSENBaWomrQc3G"
   },
 
   /* ---------- LEAD SHEETS ---------- */
   // Google Drive folder with all your charts (share it only with your team)
-  leadSheetsFolderUrl: "",
+  leadSheetsFolderUrl: "https://drive.google.com/drive/folders/1bZXg_aPkruEPoA69eE2Q6_K2-Bas8pKS?usp=share_link",
 
   // OPTIONAL: list songs individually so the team can search them.
   // For each: right-click the file in Drive → Share → Copy link.
