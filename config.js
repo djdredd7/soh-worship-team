@@ -15,7 +15,7 @@ window.SITE_CONFIG = {
 
   // OPTIONAL: paste last Sunday's video link here each week to play it
   // right on the homepage. Leave "" to show just the "Watch" button.
-  facebookVideoUrl: "https://www.facebook.com/share/v/1EP2tiVMaJ/",
+  facebookVideoUrl: "https://www.facebook.com/share/v/19wyMjvJZs/",
 
   /* ---------- CALENDAR ---------- */
   // Google Calendar → Settings → (your calendar) → Integrate calendar → Calendar ID
