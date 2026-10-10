@@ -44,35 +44,86 @@
     dateEl.textContent = d.toLocaleDateString("en-US", { weekday: "long", month: "long", day: "numeric" });
   }
 
+  // ----- Livestream: YouTube first, Facebook as a fallback -----
+  const ytChannel = ((C.youtubeChannelId || "").match(/(UC[A-Za-z0-9_-]{22})/) || [])[1];
+  const ytVideo = ((C.youtubeVideoUrl || "").match(/(?:v=|youtu\.be\/|\/live\/|\/embed\/|\/shorts\/)([A-Za-z0-9_-]{11})/) || [])[1];
+
   const isFbVideo = (u) => isSet(u) && /(\/videos\/|\/watch|video\.php|fb\.watch|\/reel\/|\/live\/\d)/.test(u);
   const fbVideo = isFbVideo(C.facebookVideoUrl) ? C.facebookVideoUrl : "";
   const fbPage = isSet(C.facebookLiveUrl) ? C.facebookLiveUrl : (isSet(C.facebookVideoUrl) && !fbVideo ? C.facebookVideoUrl : "");
 
+  let player = null, button = null;
+  const ytAllow = "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share";
+  if (ytVideo) {
+    // A specific video was pasted — it wins over the automatic one
+    player = { src: "https://www.youtube-nocookie.com/embed/" + ytVideo, allow: ytAllow };
+    button = { href: "https://www.youtube.com/watch?v=" + ytVideo, text: "Watch on YouTube" };
+  } else if (ytChannel) {
+    // Automatic: YouTube keeps a playlist of each channel's past live streams, newest first.
+    // "UULV" + the channel ID (minus its "UC") is that playlist. Set youtubeIncludeAllUploads
+    // to true to use every upload instead ("UU").
+    const list = (C.youtubeIncludeAllUploads ? "UU" : "UULV") + ytChannel.slice(2);
+    player = { src: "https://www.youtube-nocookie.com/embed/videoseries?list=" + list, allow: ytAllow };
+    button = { href: "https://www.youtube.com/channel/" + ytChannel + "/streams", text: "Watch on YouTube" };
+  } else if (fbVideo) {
+    player = {
+      src: "https://www.facebook.com/plugins/video.php?href=" + encodeURIComponent(fbVideo) + "&show_text=false&width=1280",
+      allow: "autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"
+    };
+    button = { href: fbVideo, text: "Watch on Facebook" };
+  } else if (fbPage) {
+    button = { href: fbPage, text: "Watch on Facebook" };
+  }
+
   const liveLink = $("#fb-live-link");
   if (liveLink) {
-    if (fbVideo) liveLink.href = fbVideo;
-    else if (fbPage) liveLink.href = fbPage;
+    if (button) { liveLink.href = button.href; liveLink.textContent = button.text; }
     else liveLink.hidden = true;
   }
 
   const stream = $("#stream");
   if (stream) {
-    if (fbVideo) {
+    if (player) {
       stream.classList.add("ratio-16x9");
-      stream.append(
-        frame(
-          "https://www.facebook.com/plugins/video.php?href=" + encodeURIComponent(fbVideo) + "&show_text=false&width=1280",
-          "Last Sunday's livestream",
-          { allow: "autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share", allowfullscreen: "" }
-        )
-      );
-    } else if (fbPage) {
+      stream.append(frame(player.src, "Latest service livestream", { allow: player.allow, allowfullscreen: "" }));
+    } else if (button) {
       stream.classList.add("stream-placeholder");
       const p = document.createElement("p");
-      p.textContent = "Watch the latest service on our Facebook page.";
+      p.textContent = "Watch the latest service on our page.";
       stream.append(p);
     } else {
-      setupNote(stream, "No livestream link yet.", "facebookLiveUrl");
+      setupNote(stream, "No livestream linked yet.", "youtubeChannelId");
+    }
+  }
+
+  // ----- Facebook page feed -----
+  const feedBox = $("#fb-feed");
+  if (feedBox) {
+    const feedSection = $("#fb-feed-section");
+    if (C.showFacebookFeed === false || !isSet(C.facebookLiveUrl)) {
+      feedSection.hidden = true;
+      document.querySelector(".home-lower")?.classList.add("no-feed");
+    } else {
+      // Facebook's page plugin is 180–500px wide; size it to the space available
+      const width = Math.max(180, Math.min(500, Math.floor(feedBox.clientWidth || 500)));
+      const height = 720;
+      const params = new URLSearchParams({
+        href: C.facebookLiveUrl,
+        tabs: "timeline",
+        width: String(width),
+        height: String(height),
+        small_header: "true",
+        adapt_container_width: "true",
+        hide_cover: "false",
+        show_facepile: "false"
+      });
+      const f = frame("https://www.facebook.com/plugins/page.php?" + params, "Our Facebook page", {
+        allow: "autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share",
+        scrolling: "no"
+      });
+      f.style.width = width + "px";
+      f.style.height = height + "px";
+      feedBox.append(f);
     }
   }
 

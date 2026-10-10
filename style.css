@@ -148,6 +148,20 @@ h2 { font-size: 1.6rem; }
 .around-list strong { font: 400 1.5rem/1.2 var(--display); min-width: 8rem; }
 .around-list span { color: var(--muted); }
 
+.home-lower {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 500px);
+  gap: 3rem;
+  align-items: start;
+  margin-top: clamp(3rem, 7vw, 5rem);
+}
+.home-lower .around { margin-top: 0; }
+.home-lower.no-feed { grid-template-columns: 1fr; }
+@media (max-width: 900px) { .home-lower { grid-template-columns: 1fr; } }
+.fb-feed h2 { margin-bottom: 1rem; }
+.fb-feed-frame { width: 100%; max-width: 500px; }
+.fb-feed-frame iframe { display: block; border: 0; max-width: 100%; border-radius: var(--radius); background: var(--surface); }
+
 /* ---------- Calendar ---------- */
 .toggle { display: inline-flex; border: 1px solid var(--line); border-radius: 999px; padding: 3px; margin-bottom: 1rem; background: var(--surface); }
 .toggle button {

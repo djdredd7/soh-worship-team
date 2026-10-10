@@ -10,12 +10,24 @@ window.SITE_CONFIG = {
   timeZone: "America/Chicago",
 
   /* ---------- HOME ---------- */
-  // Your church page's Live tab. Always shows the newest stream.
-  facebookLiveUrl: "https://www.facebook.com/profile.php?id=100068459588571",
+  // YouTube channel ID (starts with "UC"). The homepage automatically plays
+  // the channel's most recent live stream — nothing to update each week.
+  youtubeChannelId: "",
 
-  // OPTIONAL: paste last Sunday's video link here each week to play it
-  // right on the homepage. Leave "" to show just the "Watch" button.
-  facebookVideoUrl: "https://www.facebook.com/share/v/19wyMjvJZs/",
+  // OPTIONAL: paste one specific YouTube video link here to show it instead
+  // of the automatic latest stream. Leave "" to stay automatic.
+  youtubeVideoUrl: "",
+
+  // Set to true if the services are uploaded as regular videos instead of
+  // streamed live, so the homepage shows the newest upload.
+  youtubeIncludeAllUploads: false,
+
+  // The church's Facebook page. Shows as a scrolling feed of the page's
+  // latest posts on the homepage. Also used as the "Watch" button if the
+  // YouTube settings above are ever blank.
+  showFacebookFeed: true,
+  facebookLiveUrl: "https://www.facebook.com/profile.php?id=100068459588571",
+  facebookVideoUrl: "",
 
   /* ---------- CALENDAR ---------- */
   // Google Calendar → Settings → (your calendar) → Integrate calendar → Calendar ID
