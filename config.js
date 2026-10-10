@@ -12,7 +12,7 @@ window.SITE_CONFIG = {
   /* ---------- HOME ---------- */
   // YouTube channel ID (starts with "UC"). The homepage automatically plays
   // the channel's most recent live stream — nothing to update each week.
-  youtubeChannelId: "",
+  youtubeChannelId: "UC_z1JZ78dctMAK_nZg-5Evg",
 
   // OPTIONAL: paste one specific YouTube video link here to show it instead
   // of the automatic latest stream. Leave "" to stay automatic.
@@ -20,7 +20,7 @@ window.SITE_CONFIG = {
 
   // Set to true if the services are uploaded as regular videos instead of
   // streamed live, so the homepage shows the newest upload.
-  youtubeIncludeAllUploads: false,
+  youtubeIncludeAllUploads: true,
 
   // The church's Facebook page. Shows as a scrolling feed of the page's
   // latest posts on the homepage. Also used as the "Watch" button if the
